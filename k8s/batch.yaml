@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hey-stress
+  labels:
+    app: hey-stress
+spec:
+  template:
+    spec:      
+      containers:
+      - name: hey
+        image: savealive/hey:latest 
+        imagePullPolicy: IfNotPresent
+        args: ["-z", "120s", "-c", "300", "https://google.com"]
+      restartPolicy: Never
+      terminationGracePeriodSeconds: 0
+  completions: 8
+  parallelism: 4
